@@ -1,0 +1,31 @@
+# check-status.yml
+
+---
+  - hosts: webservers:loadbalancers
+    become: true
+    tasks: 
+      - name: Check status of apache
+        command: service httpd status
+        changed_when: false
+        args:
+          warn: no
+
+      # - name: This will not fail
+      #   command: /bin/false
+      #   ignore_errors: yes
+
+      # - name: Check status of httpd service
+      #   service_facts:
+      #   register: service_state
+
+      # - name: HTTP State
+      #   assert:
+      #     that:
+      #       # - "{{ service_state.ansible_facts.services['httpd']['state'] }}" == "running"
+      #       - 1 == 1
+      #     fail_msg: "http not running"
+      #     success_msg: "http running"
+
+      # - name: HTTP State
+      #   debug:
+      #     msg: "{{ service_state.ansible_facts.services['httpd']['state'] }}"
